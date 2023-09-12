@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 3 Template Syntax</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.29/dist/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Text Interpolation -->
+        <h1>{{ message }}</h1>
+        <!-- raw HTML -->
+        <div v-html="rawHTML"></div>
+        <!-- attribute binding [v:bind:id] -->
+        <button v-bind:id="btnId">Click Me</button>
+        <!-- JavaScript Expressinos inside Syntax [{{}}] -->
+        <p>{{ message + ' and have a good day' }}</p>
+        <!-- Methods -->
+        <button @click="reverseMessage">Reverse Message</button>
+
+        <!-- Computed Property -->
+        <p>Reversed Message: {{ reversedMessage }}</p>
+
+        <!-- Class Binding -->
+        <div v-bind:class="classObject">Example of class binding</div>
+
+        <!-- Style Binding -->
+        <div v-bind:style="styleObject">Example of style binding</div>
+
+        <!-- List rendering -->
+        <!-- v-for with an object-->
+        <h2>{{header}}</h2>
+        <ul>
+            <li
+            v-for="({id,label}, index) in items" 
+            :key="id"
+            >
+            {{label}}
+            </li>
+        </ul>
+
+        <!-- v-for with a range-->
+        <ul>
+            <li v-for="n in 5" :key="n">Item {{ n }}</li>
+        </ul>
+
+        <!-- v-for on <template> and v-for with v-if -->
+        <h2>{{title}}</h2>
+        <ul>
+            <template v-for="clothes in item">
+                <li :key="item.id"
+                v-if="item.showDescription">
+                {{ item.description }}
+                </li>
+            </template>
+        </ul>
+
+        <!-- e. v-for with a Component -->
+        <ul>
+            <custom-item v-for="item in item" :key="item.id" :item="item"></custom-item>
+        </ul>
+
+        <!--Event Handling: Listening to Events [v-on:click] and v-model.trim-->
+        <!-- Inline Handlers -->
+        <div class="event-handling">
+            <h2>Adding item to the above list</h2>
+            <input type="text" v-model.trim="newItem" placeholder="Add an item">
+            <button @click="items.push({ id: items.length + 1, label: newItem })" class="btn">Save item</button>
+        </div>
+        
+        <!-- Method Handlers -->
+        <button @click="methodClickHandler">Click me (Method)</button>
+        <!--. Form Input Bindings-->
+        <!-- Text Input -->
+        <div>
+            <br>
+            <label for="textInput">Text Input:</label>
+            <input type="text" id="textInput" v-model="textInput">
+            <p>Text Input Value: {{ textInput }}</p>	        
+        </div>
+
+        <!-- Checkbox -->
+        <div>
+            <label for="checkboxInput">Checkbox:</label>
+            <input type="checkbox" id="checkboxInput" v-model="checkboxInput">
+            <p>Checkbox Value: {{ checkboxInput }}</p>
+        </div>
+
+        <!-- Radio Buttons -->
+        <div>
+            <label for="radioInput1">Radio Button 1:</label>
+            <input type="radio" id="radioInput1" value="Option 1" v-model="radioInput">
+            <label for="radioInput2">Radio Button 2:</label>
+            <input type="radio" id="radioInput2" value="Option 2" v-model="radioInput">
+            <p>Selected Radio Value: {{ radioInput }}</p>
+        </div>
+
+        <!-- Select -->
+        <div>
+            <label for="selectInput">Select Dropdown:</label>
+            <select id="selectInput" v-model="selectInput">
+                <option value="Option 1">Option 1</option>
+                <option value="Option 2">Option 2</option>
+                <option value="Option 3">Option 3</option>
+            </select>
+            <p>Selected Option: {{ selectInput }}</p>
+        </div>
+
+        <!-- Textarea -->
+        <div>
+            <label for="textareaInput">Textarea:</label>
+            <textarea id="textareaInput" v-model="textareaInput"></textarea>
+            <p>Textarea Value: {{ textareaInput }}</p>
+        </div>
+
+        <!-- Lazy Modifier -->
+        <div>
+            <label for="lazyInput">Lazy Modifier:</label>
+            <input type="text" id="lazyInput" v-model.lazy="lazyInput">
+            <p>Lazy Input Value (Updated on Blur): {{ lazyInput }}</p>
+        </div>
+
+        <!-- Number Modifier -->
+        <div>
+            <label for="numberInput">Number Modifier:</label>
+            <input type="text" id="numberInput" v-model.number="numberInput">
+            <p>Number Input Value: {{ numberInput }}</p>
+        </div>
+
+        <!-- Watchers -->
+        <div>
+            <label for="watchTextInput">Watch Text Input:</label>
+            <input type="text" id="watchTextInput" v-model="watchTextInput">
+            <p>Watched Input Value: {{ watchTextInput }}</p>
+        </div>
+
+        <!-- Component Events [$emit] -->
+        <custom-component-with-event @custom-event="handleCustomEvent"></custom-component-with-event>
+        <p>Received Event Data: {{ eventData }}</p>
+
+        <!-- c. Slots -->
+        <custom-component-with-slot>
+            <template #custom-slot>
+                <p>Slot example</p>
+            </template>
+        </custom-component-with-slot>
+    </div>
+    <script src="vue.js"></script>
+</body>
+</html>
